@@ -3,446 +3,214 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SFRUDDONAT - The Four Starters</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SFRUDDONAT</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
-
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   background: #100d20;
   color: white;
-  font-family: 'VT323', monospace;
+  font-family: Arial, sans-serif;
   text-align: center;
 }
 
-header {
-  padding: 35px 10px 15px;
-}
-
 h1 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(22px, 5vw, 45px);
   color: #ffd34f;
-  text-shadow: 4px 4px #a33b78, 7px 7px #000;
-  margin-bottom: 20px;
+  font-size: clamp(25px, 5vw, 45px);
+  letter-spacing: 4px;
 }
 
-.subtitle {
-  font-size: 25px;
-  color: #d9c8ff;
-}
-
-.container {
+main {
   max-width: 1100px;
   margin: auto;
   padding: 15px;
 }
 
-.characters {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin-top: 30px;
+.artwork {
+  position: relative;
+  width: 100%;
+}
+
+.artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid #ffd34f;
+  border-radius: 12px;
 }
 
 .character {
-  background: #241a40;
-  border: 3px solid #7253a6;
+  position: absolute;
+  top: 25%;
+  height: 60%;
+  width: 23%;
+  border: 3px solid transparent;
+  background: transparent;
+  cursor: pointer;
   border-radius: 12px;
-  padding: 18px 10px;
-  cursor: pointer;
-  transition: .2s;
 }
 
-.character:hover {
-  transform: translateY(-8px);
-  border-color: #ffd34f;
-  box-shadow: 0 0 20px #ffd34f55;
-}
-
+.character:hover,
 .character.selected {
-  border-color: #ffd34f;
-  background: #40305e;
-  box-shadow: 0 0 20px #ffd34f88;
+  border-color: #ffe36b;
+  background: #ffffff22;
 }
 
-.avatar {
-  font-size: 65px;
-  margin: 15px 0;
-}
+#nico { left: 2%; }
+#alessio { left: 26%; }
+#matteo { left: 50%; }
+#gigi { left: 74%; }
 
-.character h2 {
-  font-family: 'Press Start 2P';
-  font-size: 12px;
-  color: #ffd34f;
-  line-height: 1.8;
-}
-
-.character p {
-  font-size: 22px;
-  color: #ddd;
-}
-
-.tag {
-  display: inline-block;
-  background: #543d7c;
-  padding: 5px 9px;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-button {
-  font-family: 'Press Start 2P';
-  cursor: pointer;
+#play {
+  position: absolute;
+  left: 38%;
+  bottom: 1%;
+  width: 24%;
+  height: 12%;
+  background: transparent;
   border: none;
-  border-radius: 8px;
-  padding: 18px 25px;
-  font-size: 13px;
-  background: #ffd34f;
-  color: #21142d;
-  box-shadow: 0 5px #a66b24;
+  cursor: pointer;
 }
 
-button:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.15);
-}
-
-.play {
-  margin: 35px 0;
-}
-
-#profile {
+#info {
   display: none;
-  background: #241a40;
-  border: 3px solid #ffd34f;
+  background: #251a43;
+  border: 2px solid #ffd34f;
   border-radius: 15px;
   padding: 25px;
-  margin: 25px auto;
-  max-width: 650px;
+  margin-top: 20px;
 }
 
-#profile h2 {
-  color: #ffd34f;
-  font-family: 'Press Start 2P';
-  font-size: 18px;
-  line-height: 1.7;
+#info h2 { color: #ffd34f; }
+
+button.action {
+  background: #ffd34f;
+  color: #20152d;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-#profile p {
-  font-size: 25px;
-  line-height: 1.4;
-}
-
-.stat {
-  background: #493467;
-  padding: 9px;
-  margin: 8px;
-  border-radius: 6px;
-  font-size: 21px;
-}
-
-#game {
-  display: none;
-  background: linear-gradient(#31265a, #141025);
-  border: 3px solid #ffd34f;
-  padding: 30px 15px;
-  border-radius: 15px;
-  margin: 25px auto;
-  max-width: 750px;
-  min-height: 300px;
-}
-
-#game h2 {
-  font-family: 'Press Start 2P';
-  color: #ffd34f;
-  font-size: 17px;
-  line-height: 1.8;
-}
-
-#game p {
-  font-size: 25px;
-  line-height: 1.5;
-}
-
-footer {
-  color: #8979a9;
-  padding: 30px;
-  font-size: 19px;
-}
-
-@media(max-width:700px) {
-  .characters {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .avatar { font-size: 48px; }
-  .character h2 { font-size: 10px; }
-}
-
-@media(max-width:380px) {
-  .characters { gap: 8px; }
-  .character { padding: 12px 5px; }
+@media(max-width:600px) {
+  main { padding: 5px; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>SFRUDDONAT</h1>
-  <div class="subtitle">THE FOUR STARTERS</div>
-  <p class="subtitle">Choose your destiny...</p>
-</header>
+<main>
+<h1>SFRUDDONAT</h1>
+<p>THE FOUR STARTERS</p>
 
-<main class="container">
+<div class="artwork" id="menu">
 
-  <h2>SELECT YOUR CHARACTER</h2>
+<img src="assets/menu-sfruddonat.png"
+     alt="Sfruddonat - selezione personaggi">
 
-  <div class="characters">
+<button class="character" id="nico"
+ aria-label="NicoPav" onclick="select('nico',this)"></button>
 
-    <div class="character" onclick="selectCharacter('nico',this)">
-      <div class="avatar">📖</div>
-      <h2>NICOPAV</h2>
-      <p>Holy Scholar</p>
-      <span class="tag">FAITH</span>
-    </div>
+<button class="character" id="alessio"
+ aria-label="Alessio" onclick="select('alessio',this)"></button>
 
-    <div class="character" onclick="selectCharacter('alessio',this)">
-      <div class="avatar">🤖</div>
-      <h2>ALESSIO</h2>
-      <p>Cyber Psychologist</p>
-      <span class="tag">ANALYSIS</span>
-    </div>
+<button class="character" id="matteo"
+ aria-label="Matteo" onclick="select('matteo',this)"></button>
 
-    <div class="character" onclick="selectCharacter('matteo',this)">
-      <div class="avatar">🎥</div>
-      <h2>MATTEO</h2>
-      <p>Urban Rebel</p>
-      <span class="tag">CHAOS</span>
-    </div>
+<button class="character" id="gigi"
+ aria-label="Gigi" onclick="select('gigi',this)"></button>
 
-    <div class="character" onclick="selectCharacter('gigi',this)">
-      <div class="avatar">⚽</div>
-      <h2>GIGI</h2>
-      <p>Napoli Striker</p>
-      <span class="tag">FOOTBALL</span>
-    </div>
+<button id="play" onclick="play()"
+ aria-label="Play"></button>
 
-  </div>
+</div>
 
-  <button class="play" onclick="startGame()">▶ PLAY</button>
+<p id="hint">Seleziona il tuo starter!</p>
 
-  <section id="profile">
-    <h2 id="profileName"></h2>
-    <p id="profileDescription"></p>
-    <div id="profileStats"></div>
-    <button onclick="startGame()">START ADVENTURE</button>
-  </section>
-
-  <section id="game">
-    <h2 id="gameTitle"></h2>
-    <p id="gameDescription"></p>
-    <h3 id="levelName"></h3>
-    <button onclick="nextLevel()">NEXT LEVEL →</button>
-    <br><br>
-    <button onclick="backToMenu()">BACK TO MENU</button>
-  </section>
+<section id="info">
+<h2 id="name"></h2>
+<p id="description"></p>
+<button class="action" onclick="play()">START ADVENTURE</button>
+<button class="action" onclick="back()">BACK</button>
+</section>
 
 </main>
-
-<footer>
-  SFRUDDONAT STUDIOS © 2026<br>
-  Four friends. Four worlds. One destiny.
-</footer>
 
 <script>
 
 const characters = {
-
-  nico: {
-    name: "NICOPAV",
-    description: "Il prescelto. Armato della sua Bibbia, NicoPav deve attraversare un mondo pieno di distrazioni per raggiungere la meta divina. Ma attenzione: la concentrazione è tutto.",
-    stats: [
-      "FEDE: 100",
-      "DISCIPLINA: 95",
-      "SOCIALITÀ: 40",
-      "RESISTENZA ALLE TENTAZIONI: 90"
-    ],
-    levels: [
-      ["LA CITTÀ DELLE TENTAZIONI",
-       "Schiva le distrazioni, raccogli le Scritture e mantieni la concentrazione."],
-      ["LA PROVA SPIRITUALE",
-       "Completa le prove di disciplina e supera gli enigmi della conoscenza."],
-      ["LA PORTA CELESTE",
-       "La prova definitiva ti aspetta. Riuscirai a raggiungere la tua destinazione?"]
-    ]
-  },
-
-  alessio: {
-    name: "ALESSIO",
-    description: "Un robot intrappolato nel mondo umano. Conosce tutta la psicologia del mondo, ma non sa ancora come comportarsi con le persone. Ogni sintomo genera un allarme.",
-    stats: [
-      "PSICOLOGIA: 100",
-      "OVERTHINKING: 100",
-      "EMPATIA TEORICA: 95",
-      "SOCIALITÀ: 20"
-    ],
-    levels: [
-      ["THE LABORATORY",
-       "Studia psicologia e raccogli dati per migliorare il tuo sistema."],
-      ["THE HUMAN SIMULATION",
-       "Affronta conversazioni, situazioni sociali e imprevisti umani."],
-      ["THE HUMAN CORE",
-       "Il test definitivo: riuscirai finalmente a diventare umano?"]
-    ]
-  },
-
-  matteo: {
-    name: "MATTEO",
-    description: "Il grande nemico delle istituzioni. Studente di cinema, anarchico e contestatore professionista. Torino non sarà più la stessa.",
-    stats: [
-      "RIBELLIONE: 100",
-      "CREATIVITÀ: 95",
-      "DIPLOMAZIA: 10",
-      "PAZIENZA: 5"
-    ],
-    levels: [
-      ["TORINO IS BURNING",
-       "Esplora la città e documenta le assurdità del sistema."],
-      ["THE BUREAUCRACY",
-       "Affronta moduli infiniti, funzionari e situazioni paradossali."],
-      ["THE STATE",
-       "Realizza il documentario definitivo e sfida il sistema attraverso la satira."]
-    ]
-  },
-
-  gigi: {
-    name: "GIGI",
-    description: "Il cuore azzurro di Sfruddonat. Il suo sogno è diventare una leggenda del Napoli. Talento, fortuna e una coordinazione tutta da verificare.",
-    stats: [
-      "PASSIONE: 100",
-      "TECNICA: 75",
-      "COORDINAZIONE: 30",
-      "FORTUNA: 95"
-    ],
-    levels: [
-      ["I VICOLI DI NAPOLI",
-       "Impara a controllare il pallone e supera le prime sfide."],
-      ["IL TORNEO AZZURRO",
-       "Dribbla gli avversari e conquista la qualificazione."],
-      ["LA FINALE DEL VESUVIO",
-       "La partita della vita. È il momento di diventare una leggenda."]
-    ]
-  }
-
+nico: {
+name: "NICOPAV",
+description: "Holy Scholar. La tua missione è superare le tentazioni, studiare e raggiungere la meta divina."
+},
+alessio: {
+name: "ALESSIO",
+description: "Cyber Psychologist. Sei un bot esperto di psicologia che deve imparare a comprendere gli esseri umani."
+},
+matteo: {
+name: "MATTEO",
+description: "Urban Rebel. Torino è il tuo terreno di gioco: documenta le assurdità del sistema."
+},
+gigi: {
+name: "GIGI",
+description: "Napoli Striker. Allenati, dribbla gli avversari e conquista la gloria azzurra."
+}
 };
 
 let selected = null;
-let currentLevel = 0;
+let started = false;
 
-function selectCharacter(id, element) {
-
+function select(id, element) {
   selected = id;
 
-  document.querySelectorAll(".character").forEach(c =>
-    c.classList.remove("selected")
-  );
+  document.querySelectorAll(".character")
+    .forEach(b => b.classList.remove("selected"));
 
   element.classList.add("selected");
 
-  const c = characters[id];
+  document.getElementById("name").textContent =
+    characters[id].name;
 
-  document.getElementById("profileName").innerText = c.name;
-  document.getElementById("profileDescription").innerText = c.description;
+  document.getElementById("description").textContent =
+    characters[id].description;
 
-  document.getElementById("profileStats").innerHTML =
-    c.stats.map(s => `<div class="stat">${s}</div>`).join("");
-
-  document.getElementById("profile").style.display = "block";
-  document.getElementById("game").style.display = "none";
-
-  document.getElementById("profile").scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("info").style.display = "block";
 }
 
-function startGame() {
-
+function play() {
   if (!selected) {
-    alert("SELECT A CHARACTER FIRST!");
+    alert("DEVI SCEGLIERE UNO STARTER!");
     return;
   }
 
-  currentLevel = 0;
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("hint").style.display = "none";
 
-  document.getElementById("profile").style.display = "none";
-  document.querySelector(".characters").style.display = "none";
-  document.querySelector(".play").style.display = "none";
+  document.getElementById("name").textContent =
+    characters[selected].name;
 
-  showLevel();
+  document.getElementById("description").textContent =
+    "Benvenuto nel tuo mondo! La tua avventura sta per iniziare.";
+
+  document.getElementById("info").style.display = "block";
+  started = true;
 }
 
-function showLevel() {
-
-  const c = characters[selected];
-  const level = c.levels[currentLevel];
-
-  document.getElementById("gameTitle").innerText = c.name;
-  document.getElementById("levelName").innerText =
-    "LEVEL " + (currentLevel + 1) + ": " + level[0];
-
-  document.getElementById("gameDescription").innerText = level[1];
-
-  document.getElementById("game").style.display = "block";
-
-  const button = document.querySelector("#game button");
-
-  button.innerText = currentLevel === 2
-    ? "COMPLETE ADVENTURE"
-    : "NEXT LEVEL →";
-
-  document.getElementById("game").scrollIntoView({
-    behavior: "smooth"
-  });
-}
-
-function nextLevel() {
-
-  if (currentLevel < 2) {
-    currentLevel++;
-    showLevel();
-  } else {
-    document.getElementById("gameTitle").innerText = "VICTORY!";
-    document.getElementById("gameDescription").innerText =
-      "Hai completato l'avventura di " + characters[selected].name + "! SFRUDDONAT FOREVER.";
-    document.getElementById("levelName").innerText =
-      "🏆 THE LEGEND IS BORN 🏆";
-    document.querySelector("#game button").style.display = "none";
-  }
-}
-
-function backToMenu() {
-
-  document.getElementById("game").style.display = "none";
-  document.getElementById("profile").style.display = "none";
-
-  document.querySelector(".characters").style.display = "grid";
-  document.querySelector(".play").style.display = "inline-block";
-
-  document.querySelectorAll(".character").forEach(c =>
-    c.classList.remove("selected")
-  );
-
-  document.querySelector("#game button").style.display = "inline-block";
+function back() {
+  document.getElementById("menu").style.display = "block";
+  document.getElementById("hint").style.display = "block";
+  document.getElementById("info").style.display = "none";
 
   selected = null;
-  currentLevel = 0;
+  started = false;
 
-  window.scrollTo({top:0, behavior:"smooth"});
+  document.querySelectorAll(".character")
+    .forEach(b => b.classList.remove("selected"));
 }
 
 </script>

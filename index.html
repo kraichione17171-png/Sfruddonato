@@ -258,7 +258,22 @@ function back() {
   document.querySelectorAll(".character")
     .forEach(b => b.classList.remove("selected"));
 }
+let selectedCharacter = null;
 
+    function select(characterName, element) {
+        const buttons = document.querySelectorAll('.character');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedCharacter = characterName;
+    }
+
+    function play() {
+        if (!selectedCharacter) {
+            alert("Prima seleziona un personaggio!");
+            return;
+        }
+        alert("Hai scelto " + selectedCharacter.toUpperCase() + "! L'avventura sta per iniziare...");
+    }
 </script>
 
 </body>
